@@ -12,6 +12,10 @@ frame f1,f2,f3,f4,f5,f6,f7;
 #define LED_COUNT 7 // Nombre de leds dans la porte
 #define PREFIX ""// Préfixe du serveur web
 
+#if SS==8
+#error SS
+#endif
+
 // Adresse mac du shield ethernet, à remplacer
 static uint8_t mac[] = {0x90, 0xa2, 0xda, 0x0d, 0x03, 0xfc};
 
@@ -40,6 +44,11 @@ void ledCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, b
 
 void setup()
 {
+  // Just a little hack doing the shield ethernet working on pin 8 instead 10
+  pinMode(10, OUTPUT);
+  digitalWrite(10, HIGH);
+  // End of the little hack
+  
   Ethernet.begin(mac);
   server.begin();
   server.setDefaultCommand(&defaultCmd);
@@ -126,6 +135,8 @@ void setup()
 
 void loop()
 {
-  //server.processConnection();
+  Serial.println("okloop");
+  delay(1000);
+  server.processConnection();
   porte->update();
 }

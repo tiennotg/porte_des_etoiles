@@ -1,7 +1,7 @@
 #include "led.h"
 #include "Tlc5940.h"
 
-#define R_PIN 7
+#define R_PIN 2
 #define V_PIN 6
 #define B_PIN 5
 
